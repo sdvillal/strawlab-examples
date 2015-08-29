@@ -17,9 +17,9 @@ import humanize
 from jagged.benchmarks.utils import hostname, drop_caches
 from jagged.misc import ensure_dir
 from strawlab_examples.minifly import split_df, FreeflightHub
-from strawlab_examples.sandbox.storage_bench import array_nan_equal, RNAi_RELEASE_PATH, MITFA_RELEASE_PATH
+from strawlab_examples.benchmarks.storage_bench import array_nan_equal, RNAi_RELEASE_PATH, MITFA_RELEASE_PATH
 from whatami import whatable, what2id, What, id2what, whatid2columns
-from strawlab_examples.sandbox.compressors import BloscCompressor, DiffCompressor
+from strawlab_examples.benchmarks.compressors import BloscCompressor, DiffCompressor
 
 
 @whatable
