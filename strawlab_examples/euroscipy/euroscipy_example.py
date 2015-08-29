@@ -34,7 +34,7 @@ NEUROPEPTIDE_DEGRADATION_PATH = op.expanduser('~/np-degradation')
 download_degradation_dataset(dest=NEUROPEPTIDE_DEGRADATION_PATH,
                              force=False)
 
-# Data hub, acess anything in the data
+# Data hub, access anything in the data
 hub = FreeflightHub(path=NEUROPEPTIDE_DEGRADATION_PATH)
 
 # Put the time series in a jagged store
@@ -46,7 +46,7 @@ hub2jagged(hub, jagged)
 
 # The trials DataFrame
 trials_df = hub.trials_df()
-# So we can easily combine df queries with series retrieval
+# In general, this index to jagged arrays would be given already
 trials_df['jagged_index'] = np.arange(len(trials_df))
 
 # Time-series names
@@ -57,7 +57,9 @@ pandify = partial(pandify, columns=human_friendly)
 get_tseries = partial(jagged.get, factory=pandify)
 
 # Find a subset of the time series
-trials = trials_df.query('length_s > 2 and exp_group == "DPPIII"').reset_index()
+# This is the kind of query we work with our data
+trials = trials_df.query('length_s > 2 and '
+                         'exp_group == "DPPIII"').reset_index()
 print('There are %d trials' % len(trials))
 tseries = list(get_tseries(trials.jagged_index))
 # This jagged instance allows "lazy" pandas DataFrames...
@@ -77,7 +79,7 @@ features_df = compute_cache_features(extractors,
                                      tseries,
                                      features_pkl=features_pkl)
 
-# To long form
+# To long form - here whatami is good help to avoid custom regexps
 melted = to_long_form(trials, features_df,
                       stimulus='rotation_rate',
                       response='dtheta')
