@@ -33,7 +33,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Operating System :: Unix',
     ],
-    install_requires=['whatami', 'jagged',  'arpeggio>=1.0', 'future', 'humanize'],
+    install_requires=['whatami', 'jagged', 'future', 'humanize', 'matplotlib', 'seaborn', 'requests'],
     tests_require=['pytest', 'pytest-cov', 'pytest-pep8'],
     platforms=['Any'],
 )

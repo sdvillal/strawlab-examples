@@ -1,10 +1,14 @@
 # coding=utf-8
 from __future__ import division, print_function, unicode_literals
 from functools import partial
+from itertools import chain
 import os.path as op
 
 from future.builtins import range
 import numpy as np
+
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from jagged.mmap_backend import JaggedByMemMap
 from strawlab_examples.euroscipy.features import PermEn, LaggedPearson
@@ -13,7 +17,7 @@ from strawlab_examples.euroscipy.misc import (hub2jagged,
                                               download_degradation_dataset,
                                               to_long_form,
                                               compute_cache_features,
-                                              pandify)
+                                              pandify, plot_lagged)
 
 
 # Data and results go here
@@ -77,12 +81,22 @@ features_df = compute_cache_features(extractors,
 melted = to_long_form(trials, features_df,
                       stimulus='rotation_rate',
                       response='dtheta')
-print('Melted array has %d rows and %d columns' % melted.shape)
+print('The tidy dataframe has %d rows and %d columns' % melted.shape)
 print('These are the features', melted.fname.unique())
 print('These are the lags', melted.lag.unique())
 
 # Draw an interesting plot
-# for condition, cdf in melted.groupby('condition'):
+sns.set_context('poster')
+fig, axes = plt.subplots(nrows=melted.condition.nunique() // 2,
+                         ncols=melted.condition.nunique() // 2,
+                         sharex=True, sharey=True,
+                         figsize=(16, 12))
+for ax, (condition, cdf) in zip(chain(*axes),
+                                melted.groupby('condition')):
+    print(condition)
+    plot_lagged(cdf, ax, title='stimulus=%s' % condition)
+fig.suptitle('Normalised cross-correlation over different conditions', fontsize=24)
+plt.savefig(op.join(NEUROPEPTIDE_DEGRADATION_PATH, 'lagcorr.png'))
 
 
 #
@@ -91,7 +105,7 @@ print('These are the lags', melted.lag.unique())
 # import numpy as np
 # hctsa.prepare()
 # extractors = [hctsa.operations.EN_PermEn_4_1, hctsa.bindings.EN_PermEn(m=6)]
-# x = np.random.randn(1000).reshape(-1, 1)
 # for extractor in extractors:
-#     print(extractor.what().id(), extractor.compute(x))
+#     for x in tseries:
+#         print(extractor.what().id(), extractor.compute(x))
 #

@@ -143,7 +143,7 @@ def to_long_form(trials_df,
     return melted.sort('lag')
 
 
-def plot_lagged(melted, ax):
+def plot_lagged(melted, ax, title):
     sns.set_context('poster')
     sns.tsplot(melted,
                time='lag',
@@ -151,12 +151,12 @@ def plot_lagged(melted, ax):
                condition='impaired',
                value='value',
                estimator=np.nanmean,
-               ax=ax)
-    ax.set_title('Stimulus-Response Lagged Correlation')
-    ax.ylabel('Pearson Correlation')
-    ax.xlabel('Lag (seconds)')
-    ax.ylim((-1.05, 1.05))
-    plt.show()
+               ax=ax,
+               color={True: 'r', False: 'b'})
+    ax.set_title(title)
+    ax.set_ylabel('Pearson Correlation')
+    ax.set_xlabel('Lag (seconds)')
+    ax.set_ylim((-1.05, 1.05))
 
 
 def compute_cache_features(extractors, tseries, features_pkl=None, force=False):
