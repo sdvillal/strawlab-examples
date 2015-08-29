@@ -97,6 +97,7 @@ for ax, (condition, cdf) in zip(chain(*axes),
     plot_lagged(cdf, ax, title='stimulus=%s' % condition)
 fig.suptitle('Normalised cross-correlation over different conditions', fontsize=24)
 plt.savefig(op.join(NEUROPEPTIDE_DEGRADATION_PATH, 'lagcorr.png'))
+print('Plot saved in %s' % op.join(NEUROPEPTIDE_DEGRADATION_PATH, 'lagcorr.png'))
 
 
 #
