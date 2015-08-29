@@ -275,4 +275,5 @@ if __name__ == '__main__':
     for (exp_group, impaired), trials in trials_df.groupby(['exp_group', 'impaired']):
         speed_means = [series['velocity'].mean() for series in hub.series_df(trials).series]
         print('\t%s, impaired=%r, mean(mean(speed_xy)) = %.2f +/- %.2f m/s' % (
-            exp_group, impaired, np.mean(speed_means), np.std(speed_means)))
+            exp_group, impaired,
+            float(np.mean(speed_means)), float(np.std(speed_means))))
