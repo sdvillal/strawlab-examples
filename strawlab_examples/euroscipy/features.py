@@ -136,13 +136,11 @@ class PermEn(FeatureExtractor):
 
         # populate counts
         for j in range(len(x) - order + 1):
-            # use numpy stride tricks...
-            this_permutation = np.argsort(x[j:j + order])
-            this_permutation.flags.writeable = False
-            alpha_counts[this_permutation.data] += 1
+            this_permutation = tuple(np.argsort(x[j:j + order]))
+            alpha_counts[this_permutation] += 1
 
         # convert to frequencies
-        alpha_freqs = np.array(alpha_counts.values()) / (len(x) - order + 1)
+        alpha_freqs = np.array(list(alpha_counts.values())) / (len(x) - order + 1)
 
         # do not allow 0 probs
         SMALL = 1E-6
