@@ -2,12 +2,12 @@
 from itertools import chain
 import os.path as op
 
-from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
 
 from whatami import id2what, whatid2columns
+
 from strawlab_examples.minifly import split_df
 
 
@@ -116,7 +116,7 @@ def to_long_form(trials_df,
                  stimulus='rotation_rate', response='speed_xy'):
     """Puts the dataframe in long (aka tidy) form."""
     # We have computed these features
-    fnames = map(str, features_df.columns)
+    fnames = list(map(str, features_df.columns))
     # Merge metadata and features
     fdf = pd.concat((trials_df, features_df), axis=1)
     # Each row is a trial

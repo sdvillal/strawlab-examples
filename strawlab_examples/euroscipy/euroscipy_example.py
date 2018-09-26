@@ -1,5 +1,6 @@
 # coding=utf-8
 from __future__ import division, print_function, unicode_literals
+from future.utils import PY3
 from functools import partial
 from itertools import chain
 import os.path as op
@@ -22,6 +23,7 @@ from strawlab_examples.euroscipy.misc import (hub2jagged,
 
 # Data and results go here
 NEUROPEPTIDE_DEGRADATION_PATH = op.expanduser('~/np-degradation')
+print('Saving data to %r' % NEUROPEPTIDE_DEGRADATION_PATH)
 
 # We will work with a smallish dataset:
 #   - 51359 trials
@@ -51,6 +53,8 @@ trials_df['jagged_index'] = np.arange(len(trials_df))
 
 # Time-series names
 columns, human_friendly = hub.series_groups_columns(as_pandas_index=True)
+if PY3:
+    human_friendly = [c.decode('utf-8') for c in human_friendly]
 
 # Fast retrieval of time-series for concrete trials
 pandify = partial(pandify, columns=human_friendly)

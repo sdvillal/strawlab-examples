@@ -171,8 +171,8 @@ class FreeflightHub(object):
         with h5py.File(op.join(self.path, 'series.h5'), 'r') as h5:
             for group in groups:
                 group = h5[group]
-                columns += group.attrs['col_ids']
-                synonyms += group.attrs['col_synonyms']
+                columns += list(group.attrs['col_ids'])
+                synonyms += list(group.attrs['col_synonyms'])
         if as_pandas_index:
             columns, synonyms = pd.Index(columns), pd.Index(synonyms)
         return columns, synonyms
@@ -201,7 +201,7 @@ class FreeflightHub(object):
         as_dataframes : boolean, default True
           If True, pandas dataframes are returned in the "series" column; else just numpy arrays.
 
-        to_categoris : boolean, default True
+        to_categories : boolean, default True
           If True, uuid is made categorical in the returned dataframe.
         """
         if isinstance(trials_coords, pd.DataFrame):
