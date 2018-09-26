@@ -140,19 +140,17 @@ def to_long_form(trials_df,
                             columns=['lag'], inplace=False)
     melted['lag'] *= melted['dt']
     # Sort by lag (useful for inspection)
-    return melted.sort('lag')
+    return melted.sort_values('lag')
 
 
 def plot_lagged(melted, ax, title):
     sns.set_context('poster')
-    sns.tsplot(melted,
-               time='lag',
-               unit='unit',
-               condition='impaired',
-               value='value',
-               estimator=np.nanmean,
-               ax=ax,
-               color={True: 'r', False: 'b'})
+    sns.lineplot(x='lag', y='value',
+                 hue='impaired',
+                 data=melted,
+                 estimator=np.nanmean,
+                 ax=ax,
+                 palette={True: 'r', False: 'b'})
     ax.set_title(title)
     ax.set_ylabel('Pearson Correlation')
     ax.set_xlabel('Lag (seconds)')
