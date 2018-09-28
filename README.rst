@@ -76,6 +76,6 @@ of neuropeptide degradation in visuo-motor behaviors.`__
 .. _strawlab: http://www.strawlab.org
 .. _youtube: https://www.youtube.com/watch?v=Na2CN1nQE_E
 .. _conda: https://conda.io/miniconda.html
-.. __: youtube_
 .. __: dataset_
+.. __: youtube_
 .. __: dataset_
